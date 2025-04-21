@@ -72,11 +72,6 @@ interface DebateInterfaceProps {
   socket: ClientSocket;
 }
 
-interface Node extends d3.SimulationNodeDatum {
-  id: number;
-  type: string;
-  sender: string;
-}
 
 const DebateInterface: React.FC<DebateInterfaceProps> = ({
   debateState,
@@ -89,7 +84,6 @@ const DebateInterface: React.FC<DebateInterfaceProps> = ({
   const [debateId, setDebateId] = useState<string | null>(null);
   const [typingStatus, setTypingStatus] = useState<TypingStatus | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const visualizationRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
