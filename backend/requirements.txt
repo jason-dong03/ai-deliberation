@@ -11,3 +11,5 @@ accelerate==0.27.2
 flask-socketio==5.3.6
 sentencepiece==0.1.99
 protobuf==4.25.3 
+eventlet
+gunicorn
