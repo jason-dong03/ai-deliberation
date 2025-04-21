@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { Socket as ClientSocket } from 'socket.io-client/build/esm/socket';
-import * as d3 from 'd3';
 
 const AGENTS = [
   {
@@ -119,60 +118,6 @@ const DebateInterface: React.FC<DebateInterfaceProps> = ({
   useEffect(() => {
     scrollToBottom();
   }, [debateState.messages]);
-
-  useEffect(() => {
-    if (debateState.active && visualizationRef.current) {
-      // Create D3 visualization of the debate flow
-      const width = visualizationRef.current.clientWidth;
-      const height = 200;
-      const margin = { top: 20, right: 20, bottom: 20, left: 20 };
-
-      // Clear previous visualization
-      d3.select(visualizationRef.current).selectAll('*').remove();
-
-      // Create SVG
-      const svg = d3
-        .select(visualizationRef.current)
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height);
-
-      // Create nodes for each message
-      const nodes: Node[] = debateState.messages.map((msg, i) => ({
-        id: i,
-        type: msg.type,
-        sender: msg.sender,
-        x: undefined,
-        y: undefined,
-      }));
-
-      // Create force simulation
-      const simulation = d3
-        .forceSimulation<Node>(nodes)
-        .force('charge', d3.forceManyBody().strength(-100))
-        .force('center', d3.forceCenter(width / 2, height / 2))
-        .force('collision', d3.forceCollide().radius(30));
-
-      // Create circles for nodes
-      const node = svg
-        .selectAll('circle')
-        .data(nodes)
-        .enter()
-        .append('circle')
-        .attr('r', 10)
-        .attr('fill', (d) => {
-          if (d.type === 'intervention') return '#f48fb1';
-          return '#90caf9';
-        });
-
-      // Update positions
-      simulation.on('tick', () => {
-        node
-          .attr('cx', (d) => d.x ?? 0)
-          .attr('cy', (d) => d.y ?? 0);
-      });
-    }
-  }, [debateState.messages, debateState.active]);
 
   useEffect(() => {
     socket.on('typing_status', (data: { debate_id: string; agent: Agent; is_typing: boolean }) => {
