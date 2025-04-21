@@ -1,0 +1,14 @@
+# Node
+node_modules/
+dist/
+.build/
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+
+# prevent accidental pushes in the future
+.env
+**/.env
+backend/config/firebase-credentials.json
