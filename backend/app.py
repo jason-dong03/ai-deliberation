@@ -17,7 +17,7 @@ load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "https://ai-deliberation.netlify.app"}})
 
 # Initialize Socket.IO
 socketio = SocketIO(app, 
@@ -349,4 +349,5 @@ def handle_agent_turn(data):
         })
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True, port=5001, host='0.0.0.0') 
+    port = int(os.environ.get("PORT", 5001))
+    socketio.run(app, debug=True, port=port, host='0.0.0.0') 
