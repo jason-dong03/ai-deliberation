@@ -43,7 +43,7 @@ const theme = createTheme({
   },
 });
 
-const socket = io('http://localhost:5001', {
+const socket = io('https://ai-deliberation.onrender.com', {
   transports: ['polling', 'websocket'],
   reconnection: true,
   reconnectionAttempts: 5,
